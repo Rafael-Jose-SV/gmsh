@@ -3,6 +3,6 @@ from typing import List, Optional
 
 class PhysicalGroup(BaseModel):
     dim: int
-    lines: List[int]
+    tags: List[int]
     tag: int
-    name: Optional[str]
+    name: Optional[str] = None
