@@ -29,7 +29,7 @@ class GMSHGenerator:
             gmsh.model.mesh.generate(self.__gmsh_data.dim)
             gmsh.write("app/meshs/" + title + ".msh")
 
-            gmsh.fltk.run()
+            # gmsh.fltk.run()
 
             gmsh.finalize()
 
