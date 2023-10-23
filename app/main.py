@@ -8,4 +8,5 @@ app = FastAPI()
 def index(gmsh_data: GMSHModel):
     gmsh = GMSHGenerator(gmsh_data)
     gmsh.generate()
-    return {"message": "mesh criado"}
+    mesh = gmsh.read_mesh_file()
+    return mesh
