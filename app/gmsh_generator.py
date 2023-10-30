@@ -1,7 +1,6 @@
 import gmsh
 from .models.gmsh_model import GMSHModel
 
-
 class GMSHGenerator:
     def __init__(self, gmsh_data: GMSHModel):
         self.__gmsh = gmsh

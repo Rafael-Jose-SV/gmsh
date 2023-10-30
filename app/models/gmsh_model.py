@@ -6,7 +6,6 @@ from .curve_loops import CurveLoops
 from .plane_surfaces import PlaneSurfaces
 from .physical_group import PhysicalGroup
 
-
 class GMSHModel(BaseModel):
     title: str
     mesh_size: float
