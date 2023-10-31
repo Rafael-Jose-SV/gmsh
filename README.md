@@ -18,9 +18,7 @@ docker build -t gmsh .
 baixe as dependencias:
 
 ```shell
-pip install gmsh
-pip install fastapi
-pip install "uvicorn[standard]"
+pip install -r requirements.txt
 ```
 
 rode o comando:
