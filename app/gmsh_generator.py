@@ -26,7 +26,7 @@ class GMSHGenerator:
             self._add_physical_groups()
 
             gmsh.model.mesh.generate(self._gmsh_data.dim)
-            gmsh.write("app/meshs/tmp.msh")
+            gmsh.write("app/mesh/tmp.msh")
 
             # gmsh.fltk.run()
 
@@ -36,8 +36,6 @@ class GMSHGenerator:
             print(e)
 
     def read_mesh_file(self):
-        title = self._gmsh_data.title
-
         with open("app/mesh/tmp.msh", "r") as file:
             mesh = file.read()
             return mesh
