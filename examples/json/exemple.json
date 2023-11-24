@@ -1,5 +1,4 @@
 {
-  "title": "t1", 
   "mesh_size": 1e-2,
   "points": [
     {"x": 0, "y": 0, "z": 0, "tag":1}, 
