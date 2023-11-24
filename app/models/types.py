@@ -1,22 +1,22 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class Points(BaseModel):
+class Point(BaseModel):
     x: float
     y: float
     z: float
     tag: int
 
-class Lines(BaseModel):
+class Line(BaseModel):
     first_point: int
     second_point: int
     tag: int
 
-class CurveLoops(BaseModel):
+class CurveLoop(BaseModel):
     curve_loop: list[int]
     tag: int
 
-class PlaneSurfaces(BaseModel):
+class PlaneSurface(BaseModel):
     plane_surface: list[int]
     tag: int
 

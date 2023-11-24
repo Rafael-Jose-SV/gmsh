@@ -1,20 +1,29 @@
 import gmsh
-from .models.gmsh_model import GMSHModel
+from ..models.types import *
 
-class GMSHGenerator:
-    def __init__(self, gmsh_data: GMSHModel):
+class Generator:
+    _points: list[Point] = []
+    _lines: list[Line] = []
+    _curve_loops: list[CurveLoop] = []
+    _plane_surfaces: list[PlaneSurface] = []
+    _physical_groups: list[PhysicalGroup] = []
+
+    def __init__(self, request_json):
         self._gmsh = gmsh
-        self._gmsh_data = gmsh_data
-        self._mesh_size = gmsh_data.mesh_size
+
+        self._points = request_json.points
+        self._lines = request_json.lines
+        self._curve_loops = request_json.curve_loops
+        self._plane_surfaces = request_json.plane_surfaces
+        self._physical_groups = request_json.physical_groups
 
     def generate(self):
-        title = self._gmsh_data.title
         gmsh = self._gmsh
 
         try:
             gmsh.initialize()
 
-            gmsh.model.add(title)
+            gmsh.model.add('tmp')
 
             self._add_points()
             self._add_lines()
@@ -28,7 +37,7 @@ class GMSHGenerator:
             gmsh.model.mesh.generate(self._gmsh_data.dim)
             gmsh.write("app/mesh/tmp.msh")
 
-            # gmsh.fltk.run()
+            gmsh.fltk.run()
 
             gmsh.finalize()
 
@@ -41,37 +50,27 @@ class GMSHGenerator:
             return mesh
 
     def _add_points(self):
-        points = self._gmsh_data.points
-
-        for point in points:
+        for point in self._points:
             self._gmsh.model.geo.addPoint(
-                point.x, point.y, point.z, self._mesh_size, point.tag
+                point.x, point.y, point.z, self._gmsh_data._mesh_size, point.tag
             )
 
     def _add_lines(self):
-        lines = self._gmsh_data.lines
-
-        for line in lines:
+        for line in self._lines:
             self._gmsh.model.geo.addLine(line.first_point, line.second_point, line.tag)
 
     def _add_curve_loops(self):
-        curve_loops = self._gmsh_data.curve_loops
-
-        for curve_loop in curve_loops:
+        for curve_loop in self._curve_loops:
             self._gmsh.model.geo.addCurveLoop(curve_loop.curve_loop, curve_loop.tag)
 
     def _add_plane_surfaces(self):
-        plane_surfaces = self._gmsh_data.plane_surfaces
-
-        for plane_surface in plane_surfaces:
+        for plane_surface in self._plane_surfaces:
             self._gmsh.model.geo.addPlaneSurface(
                 plane_surface.plane_surface, plane_surface.tag
             )
 
     def _add_physical_groups(self):
-        physical_groups = self._gmsh_data.physical_groups
-
-        for physical_group in physical_groups:
+        for physical_group in self._physical_groups:
             self._gmsh.model.geo.addPhysicalGroup(
                 physical_group.dim, physical_group.tags, physical_group.tag
             )
